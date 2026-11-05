@@ -16,23 +16,20 @@ enum ShooterState{
 @TeleOp
 public class JosephineDrive extends LinearOpMode {
     //TODO: define motors, sensors, processors here
-    //private DcMotor frontLeft;
-    //private DcMotor backLeft;
-    //private DcMotor frontRight;
-    //private DcMotor backRight;
-
     //private DcMotor nectarShooter;
 
     //private DcMotor pollenShooter;
 
     //private DcMotor intake;
 
+    private Drive drive;
+
     private ArrayList<ShooterState> shooterStateList = new ArrayList<>();
 
     @Override
     public void runOpMode() throws InterruptedException {
         // TODO: add initialise code here
-        driveInit();
+        this.drive = new Drive(null, null, null, null);
 
         waitForStart();
         resetRuntime();
@@ -42,20 +39,13 @@ public class JosephineDrive extends LinearOpMode {
                 //TODO: add loop code here
                 telemetry.addData("Runtime: ", getRuntime());
                 telemetry.update();
-                drive(gamepad1.left_stick_y, gamepad1.right_stick_x, gamepad1.left_stick_x);
+                this.drive.drive(gamepad1.right_stick_y, gamepad1.right_stick_x, gamepad1.left_stick_x);
                 telemetry.addLine(shooterStateList.toString());
                 handleShooter();
                 handleIntake();
 
             }
         }
-    }
-
-    private void drive(double forward, double strafe, double rotation) {
-        //frontLeft.setPower((forward + rotation) - strafe);
-        //frontRight.setPower((forward - rotation) + strafe);
-        //backRight.setPower((forward - rotation) - strafe);
-        //backLeft.setPower((forward + rotation) + strafe);
     }
 
     private void handleShooter() {
